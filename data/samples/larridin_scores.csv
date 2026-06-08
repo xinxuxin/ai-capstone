@@ -1,0 +1,21 @@
+ticker,company_name,snapshot_date,ai_adoption_score,ai_fluency_score,ai_impact_score,ai_hiring_score,source_name,source_url,available_at
+MSFT,Microsoft Corporation,2025-03-31,5,5,5,5,larridin_sample,synthetic,2025-04-02
+MSFT,Microsoft Corporation,2025-06-30,5,5,5,5,larridin_sample,synthetic,2025-07-02
+MSFT,Microsoft Corporation,2025-09-30,5,5,5,5,larridin_sample,synthetic,2025-10-02
+MSFT,Microsoft Corporation,2025-12-31,5,5,5,5,larridin_sample,synthetic,2026-01-02
+WMT,Walmart Inc.,2025-03-31,3,2,3,3,larridin_sample,synthetic,2025-04-02
+WMT,Walmart Inc.,2025-06-30,3,3,3,4,larridin_sample,synthetic,2025-07-02
+WMT,Walmart Inc.,2025-09-30,4,3,4,4,larridin_sample,synthetic,2025-10-02
+WMT,Walmart Inc.,2025-12-31,4,3,4,4,larridin_sample,synthetic,2026-01-02
+BLK,BlackRock Inc.,2025-03-31,3,3,3,2,larridin_sample,synthetic,2025-04-02
+BLK,BlackRock Inc.,2025-06-30,4,3,4,3,larridin_sample,synthetic,2025-07-02
+BLK,BlackRock Inc.,2025-09-30,4,4,4,3,larridin_sample,synthetic,2025-10-02
+BLK,BlackRock Inc.,2025-12-31,4,4,4,3,larridin_sample,synthetic,2026-01-02
+JPM,JPMorgan Chase & Co.,2025-03-31,4,3,3,3,larridin_sample,synthetic,2025-04-02
+JPM,JPMorgan Chase & Co.,2025-06-30,4,4,4,3,larridin_sample,synthetic,2025-07-02
+JPM,JPMorgan Chase & Co.,2025-09-30,4,4,4,4,larridin_sample,synthetic,2025-10-02
+JPM,JPMorgan Chase & Co.,2025-12-31,4,4,4,4,larridin_sample,synthetic,2026-01-02
+UNH,UnitedHealth Group Incorporated,2025-03-31,2,2,2,2,larridin_sample,synthetic,2025-04-02
+UNH,UnitedHealth Group Incorporated,2025-06-30,2,2,3,2,larridin_sample,synthetic,2025-07-02
+UNH,UnitedHealth Group Incorporated,2025-09-30,3,2,3,2,larridin_sample,synthetic,2025-10-02
+UNH,UnitedHealth Group Incorporated,2025-12-31,3,3,3,2,larridin_sample,synthetic,2026-01-02

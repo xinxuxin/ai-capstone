@@ -1,0 +1,6 @@
+company_id,ticker,name,sector,industry,cik,exchange,market_cap
+C001,MSFT,Microsoft Corporation,Information Technology,Software,0000789019,NASDAQ,3000000000000
+C002,WMT,Walmart Inc.,Consumer Staples,Consumer Staples Retail,0000104169,NYSE,500000000000
+C003,BLK,BlackRock Inc.,Financials,Capital Markets,0001364742,NYSE,120000000000
+C004,JPM,JPMorgan Chase & Co.,Financials,Banks,0000019617,NYSE,600000000000
+C005,UNH,UnitedHealth Group Incorporated,Health Care,Managed Health Care,0000731766,NYSE,450000000000
