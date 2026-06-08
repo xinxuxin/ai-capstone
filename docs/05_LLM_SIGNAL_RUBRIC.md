@@ -1,22 +1,74 @@
 # LLM Signal Rubric
 
-## Evidence-first extraction
+This POC extracts AI adoption evidence from unstructured public documents. It is designed to enrich research features, not to replace the canonical Larridin scores or produce standalone conclusions.
 
-The LLM should not directly invent a final score. It should first extract evidence, then map evidence to binary or categorical indicators, then aggregate to a 1–5 score.
+## Evidence-First Workflow
 
-## AI operational maturity score
+1. Parse a source document with stable provenance: source_document_id, source_type, source_date, company_id or ticker.
+2. Extract short evidence spans that directly mention AI-related activity, hiring, infrastructure, training, or claimed impact.
+3. Map the evidence to structured signal judgments.
+4. Assign 1-5 scores only when the evidence supports a dimension.
+5. Return null for a score when the document does not provide enough evidence.
+6. Store prompt_version, schema_version, model_name, confidence, extraction_created_at, and limitations.
 
-| Score | Definition |
+The model must not directly invent a total company score. Composite research features should be computed downstream from validated structured fields.
+
+## Supported Source Types
+
+- sec_filing
+- earnings_transcript
+- job_posting
+- news_article
+- company_web_page
+
+## Signal Dimensions
+
+| Signal | Description |
 |---|---|
-| 1 | No meaningful AI adoption evidence |
-| 2 | Exploratory or vague AI language |
-| 3 | Pilots or limited departmental use cases |
-| 4 | Production use in multiple business functions |
-| 5 | Enterprise-wide AI transformation with measurable business impact |
+| ai_strategy_specificity | Specificity of AI strategy, roadmap, named initiatives, ownership, or execution plans. |
+| ai_operational_maturity | Degree to which AI appears exploratory, piloted, productionized, or scaled across workflows. |
+| ai_workforce_training | Evidence of AI fluency, training, upskilling, governance training, or responsible-use enablement. |
+| ai_hiring_intensity | Evidence of AI, machine learning, data science, model operations, or AI infrastructure hiring demand. |
+| ai_capex_or_infrastructure_signal | Evidence of AI-related cloud, GPU, data center, model platform, data infrastructure, or capex investment. |
+| ai_productivity_claim | Evidence that AI is claimed to improve productivity, automation, revenue, margin, cycle time, quality, or cost. |
 
-## Required output principles
+## 1-5 Anchors
 
-- Every score must have evidence.
-- Every evidence item must have source type, quote or paraphrase, business function, and confidence.
-- Prompt version and model name must be stored.
-- Low-confidence extractions should not be silently treated as high-quality data.
+| Score | Anchor | Interpretation |
+|---|---|---|
+| 1 | Minimal or negative | Explicit evidence of no meaningful activity, cancellation, or very limited exploration. |
+| 2 | Vague exploration | Generic statements, awareness, or early exploration without named use cases. |
+| 3 | Pilot or limited use | Named pilots, limited deployments, or credible function-level initiatives. |
+| 4 | Production use | Production deployment in one or more functions with operating detail, governance, or repeatable workflow evidence. |
+| 5 | Scaled transformation | Enterprise-scale transformation with measurable outcomes, resourcing, infrastructure, and a repeatable operating model. |
+
+If the evidence is absent or too ambiguous, the score must be null, not 1.
+
+## Required Provenance
+
+Every extraction must preserve:
+
+- company_id or ticker
+- source_document_id
+- source_type
+- source_date
+- extraction_created_at
+- model_name
+- prompt_version
+- schema_version
+- short evidence spans
+- evidence references for every non-null score
+- confidence for every signal
+- limitations or uncertainty notes
+
+## Quality Checks
+
+The evaluation helpers report:
+
+- schema validity rate
+- evidence coverage rate
+- missing score rate
+- confidence distribution
+- duplicate evidence detection
+
+Low evidence coverage, high missing score rates, repeated evidence, or low confidence should trigger human review before the fields are used in research analysis.
