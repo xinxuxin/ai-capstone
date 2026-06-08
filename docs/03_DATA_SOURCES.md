@@ -110,6 +110,59 @@ Sources:
 - news articles
 - company AI initiative pages
 
+## Job postings
+
+Purpose: AI hiring signal research and future LLM enrichment from public recruiting text.
+
+MVP ingestion mode: CSV export only. Use `scripts/sample_job_postings.py`; do not scrape websites or call LLM APIs in this phase.
+
+Expected CSV fields:
+
+- `job_posting_id`
+- `company_id` or `ticker`
+- `title`
+- `department`, if available
+- `location`, if available
+- `description`, if available
+- `posting_date`, if available
+- `collected_at`
+- `source_url`, if available
+- `source_name`
+- `is_active`, if available
+
+Normalization rules:
+
+- Tickers are normalized to uppercase.
+- Titles and text fields are whitespace-normalized.
+- `posting_date` is optional because many company career pages omit it.
+- `collected_at` is required and must preserve when the posting was observed.
+- A SHA-256 `raw_hash` is computed from normalized title, department, location, description, and source URL to support duplicate detection.
+- Likely duplicates are flagged within the same company or ticker; they are not dropped automatically.
+
+Deterministic AI keyword classifier terms:
+
+- artificial intelligence
+- machine learning
+- generative AI
+- LLM
+- NLP
+- computer vision
+- data scientist
+- ML engineer
+- prompt engineer
+- AI product
+- AI platform
+- automation engineer
+
+Sampling buckets:
+
+- `ai_keyword_matched`
+- `technical_non_ai`
+- `non_technical`
+- `leadership_strategy`
+
+Sampling outputs preserve `sample_weight`, `sampling_bucket`, `random_seed`, and `sampled_at`. Sampling must never request more rows from a bucket than are available.
+
 ## Data quality notes
 
 - Job posting pages are not standardized.

@@ -32,6 +32,21 @@ The model must not directly invent a total company score. Composite research fea
 | ai_capex_or_infrastructure_signal | Evidence of AI-related cloud, GPU, data center, model platform, data infrastructure, or capex investment. |
 | ai_productivity_claim | Evidence that AI is claimed to improve productivity, automation, revenue, margin, cycle time, quality, or cost. |
 
+## Job Posting Sampling Notes
+
+Job postings are useful for `ai_hiring_intensity`, but they are noisy. A posting can indicate hiring demand, vendor implementation, compliance work, or ordinary technical hiring depending on context.
+
+The Phase 11 framework uses deterministic keyword matching before any LLM enrichment. Matching terms include artificial intelligence, machine learning, generative AI, LLM, NLP, computer vision, data scientist, ML engineer, prompt engineer, AI product, AI platform, and automation engineer.
+
+Sampled postings are grouped into:
+
+- `ai_keyword_matched`
+- `technical_non_ai`
+- `non_technical`
+- `leadership_strategy`
+
+LLM extraction from sampled job postings must still quote short evidence spans, preserve source_document_id or job_posting_id provenance, and return null for any signal dimension not supported by the posting text.
+
 ## 1-5 Anchors
 
 | Score | Anchor | Interpretation |
