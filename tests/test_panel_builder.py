@@ -9,6 +9,7 @@ def test_build_analytic_panel_forward_return() -> None:
     )
     scores = pd.DataFrame(
         {
+            "company_id": ["C1"],
             "ticker": ["AAA"],
             "company_name": ["AAA Corp"],
             "snapshot_date": ["2025-03-31"],
@@ -22,6 +23,7 @@ def test_build_analytic_panel_forward_return() -> None:
     )
     prices = pd.DataFrame(
         {
+            "company_id": ["C1", "C1"],
             "ticker": ["AAA", "AAA"],
             "price_date": ["2025-03-31", "2025-06-30"],
             "adjusted_close": [100.0, 110.0],
@@ -29,6 +31,7 @@ def test_build_analytic_panel_forward_return() -> None:
     )
     financials = pd.DataFrame(
         {
+            "company_id": ["C1", "C1"],
             "ticker": ["AAA", "AAA"],
             "fiscal_quarter": ["2025Q1", "2025Q2"],
             "fiscal_period_end": ["2025-03-31", "2025-06-30"],

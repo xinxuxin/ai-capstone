@@ -75,10 +75,14 @@ class CompanyRecord(RecordModel):
     company_id: str
     ticker: str
     name: str
+    company_name: str | None = None
     sector: str | None = None
     industry: str | None = None
     cik: str | None = None
     exchange: str | None = None
+    country: str | None = None
+    active_from: date | None = None
+    active_to: date | None = None
     market_cap: float | None = None
 
     @field_validator("ticker")

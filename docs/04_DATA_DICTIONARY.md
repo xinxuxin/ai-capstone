@@ -11,16 +11,29 @@ Company master table. One row per stable internal company.
 | Field | Type | Required | Data source | Description | Timing and look-ahead notes |
 |---|---|---:|---|---|---|
 | company_id | text | Required | Internal mapping | Stable internal company identifier | Stable key for all company-level joins |
-| ticker | text | Required | Public listing data or sponsor mapping | Primary ticker at collection time | Use identifier history for ticker changes |
-| name | text | Required | Public listing data or sponsor mapping | Company display or legal name | Descriptive only |
-| sector | text | Optional | Public fundamentals or mapping | Sector classification | If used as a feature, respect classification availability date |
+| company_name | text | Required | Public listing data or sponsor mapping | Company display or legal name | Descriptive only |
+| name | text | Optional | Backward-compatible alias | Alias of `company_name` retained for older code paths | Do not treat as a separate identifier |
+| ticker | text | Required | Public listing data or sponsor mapping | Normalized primary ticker at collection time | Prefer `company_id`; ticker fallback joins must emit warnings |
+| cik | text | Optional | SEC/company mapping | SEC Central Index Key, preserved as zero-padded string | Supports SEC joins |
+| exchange | text | Optional | Public listing data | Normalized listing exchange | Use valid-date mapping when exchange changes |
+| sector | text | Optional | Public fundamentals or mapping | Sector classification | Missing sector should be reported; if used as a feature, respect classification availability date |
 | industry | text | Optional | Public fundamentals or mapping | Industry classification | If used as a feature, respect classification availability date |
-| cik | text | Optional | SEC/company mapping | SEC Central Index Key | Supports SEC joins |
-| exchange | text | Optional | Public listing data | Listing exchange | Use valid-date mapping when exchange changes |
+| country | text | Optional | Public listing data or sponsor mapping | Listing or headquarters country, depending on source contract | Source definition must be documented |
+| active_from | date | Optional | Identifier mapping | First date company mapping is active | Use for point-in-time mapping when available |
+| active_to | date | Optional | Identifier mapping | Last date company mapping is active | Null means current/unknown end |
 | market_cap | numeric | Optional | Market/fundamental vendor | Market capitalization | Must not be used as a feature unless observation timing is known |
 | source_name | text | Optional | Ingestion metadata | Source for company master record | Audit field |
 | created_at | timestamptz | Required | System | Row creation timestamp | Audit field |
 | updated_at | timestamptz | Required | System | Row update timestamp | Audit field |
+
+Identifier mapping rules:
+
+- Normalize tickers to uppercase before joining.
+- Preserve CIKs as zero-padded strings.
+- Detect duplicate `company_id`, duplicate ticker, duplicate CIK, and incoming rows whose `company_id` and ticker conflict with the master.
+- Join on `company_id` whenever available.
+- Ticker fallback joins must emit an explicit warning and report unmatched rows.
+- Many-to-many joins are invalid and must raise errors.
 
 ## `company_identifiers`
 

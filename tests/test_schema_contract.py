@@ -70,6 +70,10 @@ def test_feature_tables_include_observation_date_and_available_at() -> None:
 
 
 def test_identifier_and_model_output_contract_fields_are_in_sql() -> None:
+    companies = _table_body("companies")
+    for field in ["company_name", "country", "active_from", "active_to"]:
+        assert field in companies
+
     identifiers = _table_body("company_identifiers")
     for field in ["company_id", "identifier_type", "identifier_value", "valid_from", "valid_to"]:
         assert field in identifiers
