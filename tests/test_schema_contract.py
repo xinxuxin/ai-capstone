@@ -92,6 +92,24 @@ def test_identifier_and_model_output_contract_fields_are_in_sql() -> None:
             assert field in body
 
 
+def test_market_and_financial_ingestion_fields_are_in_sql() -> None:
+    market = _table_body("market_prices")
+    for field in ["adjusted_close", "daily_return", "volume", "available_at"]:
+        assert field in market
+
+    financial = _table_body("financial_metrics")
+    for field in [
+        "revenue",
+        "gross_margin",
+        "operating_margin",
+        "net_income",
+        "employee_count",
+        "source_document_id",
+        "available_at",
+    ]:
+        assert field in financial
+
+
 def test_pydantic_models_parse_dates_and_validate_scores() -> None:
     company = CompanyRecord(company_id="C001", ticker="msft", name="Microsoft")
     assert company.ticker == "MSFT"

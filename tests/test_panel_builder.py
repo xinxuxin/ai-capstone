@@ -32,6 +32,7 @@ def test_build_analytic_panel_forward_return() -> None:
             "ticker": ["AAA", "AAA"],
             "fiscal_quarter": ["2025Q1", "2025Q2"],
             "fiscal_period_end": ["2025-03-31", "2025-06-30"],
+            "available_at": ["2025-04-25", "2025-07-25"],
             "revenue": [1000.0, 1050.0],
             "operating_margin": [0.20, 0.22],
             "employee_count": [100.0, 101.0],

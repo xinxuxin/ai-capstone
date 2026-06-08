@@ -124,6 +124,7 @@ class MarketPriceRecord(RecordModel):
     price_date: date
     price_quarter: str
     adjusted_close: float
+    daily_return: float | None = None
     volume: float | None = None
     source_name: str | None = None
     available_at: datetime
@@ -136,9 +137,12 @@ class FinancialMetricRecord(RecordModel):
     fiscal_quarter: str
     fiscal_period_end: date
     revenue: float | None = None
+    gross_margin: float | None = None
     operating_margin: float | None = None
+    net_income: float | None = None
     employee_count: float | None = None
     source_name: str | None = None
+    source_document_id: str | None = None
     available_at: datetime
 
 

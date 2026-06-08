@@ -70,6 +70,7 @@ Canonical market price observations.
 | price_date | date | Required | Market data source | Price observation date | Observation date |
 | price_quarter | text | Required | Derived from price_date | Calendar quarter label | Convenience period |
 | adjusted_close | numeric | Required | Market data source | Adjusted close price | Used for future outcomes, not contemporaneous model features unless intended |
+| daily_return | numeric | Optional | Derived from adjusted_close | Daily percentage return within company/ticker price series | Outcome/control only after the relevant `price_date` |
 | volume | numeric | Optional | Market data source | Trading volume | Feature only if available before prediction date |
 | source_name | text | Optional | Ingestion metadata | Source name | Audit field |
 | available_at | timestamptz | Required | Market data source | Earliest timestamp price was observable | Required for timing checks |
@@ -87,13 +88,16 @@ Canonical quarterly financial metrics.
 | ticker | text | Required | Financial data source | Ticker from source | Preserve source ticker |
 | fiscal_quarter | text | Required | Financial data source | Fiscal quarter label | Period label, not availability date |
 | fiscal_period_end | date | Required | Financial data source | Fiscal period end date | Observation period end |
+| available_at | timestamptz | Required | Filing/vendor release metadata | Earliest timestamp metric was observable | Must be on or after fiscal period end unless an explicit documented warning override is used |
 | revenue | numeric | Optional | Financial statements/vendor | Revenue for period | Feature/outcome only after `available_at` |
+| gross_margin | numeric | Optional | Derived/vendor | Gross margin ratio | Values are normalized to ratios during ingestion |
 | operating_margin | numeric | Optional | Derived/vendor | Operating margin ratio | Feature/outcome only after `available_at` |
+| net_income | numeric | Optional | Financial statements/vendor | Net income for period | Feature/outcome only after `available_at` |
 | employee_count | numeric | Optional | Financial statements/vendor | Employee count/headcount | Often sparse; document source definition |
 | revenue_per_employee | numeric | Optional | Derived/vendor | Revenue divided by employees | Feature/outcome only after `available_at` |
 | source_name | text | Optional | Ingestion metadata | Source name | Audit field |
+| source_document_id | text | Optional | Source document registry | Linked source document, filing, or vendor extract ID | Preserves lineage when available |
 | source_url | text | Optional | Ingestion metadata | Source URL if available | Avoid leaking private URLs |
-| available_at | timestamptz | Required | Filing/vendor release metadata | Earliest timestamp metric was observable | Must not default to fiscal period end for real data without justification |
 | raw_payload | jsonb | Optional | Financial source | Raw source row/payload | Keep restricted raw data out of git |
 | created_at | timestamptz | Required | System | Row creation timestamp | Audit field |
 

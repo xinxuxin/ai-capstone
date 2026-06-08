@@ -38,26 +38,65 @@ Future API mode:
 
 Purpose: Operational outcomes and controls.
 
-Candidate fields:
+MVP ingestion mode: CSV export only. Use `scripts/ingest_financials.py`; tests and local smoke workflows must remain offline.
 
-- revenue
-- gross margin
-- operating margin
-- net income
-- employee count
-- revenue per employee
+Expected CSV fields:
+
+- `company_id` or `ticker`
+- `fiscal_quarter`
+- `fiscal_period_end`
+- `available_at`
+- `revenue`
+- `gross_margin`, if available
+- `operating_margin`, if available
+- `net_income`, if available
+- `employee_count`, if available
+- `source_name`, if available
+- `source_document_id`, if available
+
+Ingestion rules:
+
+- Tickers are normalized to uppercase.
+- `fiscal_period_end` and `available_at` must parse as dates.
+- `available_at` must be on or after `fiscal_period_end` by default. The CLI flag `--allow-early-available-at` emits a warning and should only be used for synthetic data or explicitly documented timing assumptions.
+- `revenue` must be numeric.
+- Margin fields are normalized as ratios: values between 0 and 1 are preserved, and percentage-style values between 1 and 100 are divided by 100.
+- `employee_count` must be positive when present.
+- Normalized outputs should be written to `data/processed/financial_metrics_normalized.csv` or `.parquet`.
+
+Future API mode:
+
+- `SECCompanyFactsAdapter` and `FinancialDataAPIClient` are stubs for future SEC EDGAR or vendor integration.
+- Do not add network calls until source contracts, rate limits, and safe mocks are defined.
 
 ## Market data
 
 Purpose: Forward return outcomes and hypothetical portfolio backtest.
 
-Candidate fields:
+MVP ingestion mode: CSV export only. Use `scripts/ingest_market_data.py`; tests and local smoke workflows must remain offline.
 
-- adjusted close
-- volume
-- market cap
-- benchmark return
-- sector benchmark return
+Expected CSV fields:
+
+- `company_id` or `ticker`
+- `date`
+- `adjusted_close`
+- `volume`, if available
+- `source_name`, if available
+
+Ingestion rules:
+
+- Tickers are normalized to uppercase.
+- `date` is parsed and normalized to `price_date`.
+- Rows are sorted by company/ticker and date.
+- `adjusted_close` must be numeric and greater than 0.
+- `daily_return` is computed from adjusted closes within each company/ticker series when enough data exists.
+- `available_at` defaults to the price date for CSV market prices unless the source provides a stricter timestamp.
+- Normalized outputs should be written to `data/processed/market_prices_normalized.csv` or `.parquet`.
+
+Future API mode:
+
+- `MarketDataAPIClient` is a stub for future market data vendor integration.
+- Do not add network calls until source contracts, rate limits, and safe mocks are defined.
 
 ## Unstructured sources
 
