@@ -16,6 +16,8 @@ def test_build_analytic_panel_forward_return() -> None:
             "ai_fluency_score": [3],
             "ai_impact_score": [3],
             "ai_hiring_score": [4],
+            "source_name": ["synthetic_larridin_sample"],
+            "available_at": ["2025-04-02"],
         }
     )
     prices = pd.DataFrame(
