@@ -1,31 +1,5 @@
-CORE_TABLES = {
-    "companies": ["company_id", "ticker", "name", "sector", "industry", "cik"],
-    "larridin_scores": [
-        "company_id",
-        "ticker",
-        "snapshot_date",
-        "score_quarter",
-        "ai_adoption_score",
-        "ai_fluency_score",
-        "ai_impact_score",
-        "ai_hiring_score",
-        "available_at",
-    ],
-    "financial_metrics": [
-        "company_id",
-        "ticker",
-        "fiscal_quarter",
-        "revenue",
-        "operating_margin",
-        "employee_count",
-        "available_at",
-    ],
-    "market_prices": [
-        "company_id",
-        "ticker",
-        "price_date",
-        "price_quarter",
-        "adjusted_close",
-        "available_at",
-    ],
-}
+from __future__ import annotations
+
+from ai_impact_research.db.models import CANONICAL_TABLES, MODEL_REQUIRED_COLUMNS
+
+CORE_TABLES = {table: sorted(MODEL_REQUIRED_COLUMNS[table]) for table in CANONICAL_TABLES}
