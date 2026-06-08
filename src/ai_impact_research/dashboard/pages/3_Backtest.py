@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import streamlit as st
+
 from ai_impact_research.analysis.backtest import long_short_returns, quintile_returns
 from ai_impact_research.dashboard.components import load_panel, show_research_caveat
 

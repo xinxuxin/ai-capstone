@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import streamlit as st
+
 from ai_impact_research.analysis.ic import compute_ic_by_period, summarize_ic
 from ai_impact_research.analysis.plots import signal_vs_outcome_figure
 from ai_impact_research.dashboard.components import load_panel, show_research_caveat

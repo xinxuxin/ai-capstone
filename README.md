@@ -1,87 +1,122 @@
-# AI Impact Research Starter
+# AI Impact Research
 
-This repository is a starter codebase for the Larridin × CMU AI Capstone project:
-**Do AI adoption signals predict company performance?**
+AI Impact Research is the Larridin x CMU AI Capstone repository for testing whether AI adoption signals predict future public-company performance.
 
-The project should be treated as a reproducible AI × finance research system, not just a dashboard demo. The intended pipeline is:
+The project builds a reproducible decision intelligence system around four Larridin AI Transformation Tracker signals:
+
+- `ai_adoption_score`
+- `ai_fluency_score`
+- `ai_impact_score`
+- `ai_hiring_score`
+
+The research pipeline combines those signals with public financial and market data to study forward returns, revenue growth, margin expansion, revenue per employee, and hiring or headcount indicators when available.
 
 ```text
-Larridin scores + public company data
-        ↓
-raw and normalized datasets
-        ↓
-company-quarter analytical panel
-        ↓
-IC / regression / backtest / robustness analysis
-        ↓
-Streamlit dashboard + ticker-level research report
+Larridin signals + public company data
+        -> normalized datasets
+        -> company-quarter analytical panel
+        -> IC, regression, backtest, robustness analysis
+        -> Streamlit dashboard + ticker-level report
 ```
 
-## What is already included
+## Setup
 
-- Python package skeleton under `src/ai_impact_research/`
-- Sample synthetic company, score, price, and fundamentals data under `data/samples/`
-- Panel builder, IC analysis, simple backtest utilities, and deterministic report generator
-- Streamlit dashboard starter
-- SQL schema starter under `infra/db_schema.sql`
-- Phased coding prompts under `docs/01_PHASED_CODING_PROMPTS.md`
-- Methodology and documentation templates under `docs/`
-
-All sample data is synthetic and for local smoke tests only.
-
-## Quick start
+Use Python 3.11 or newer. `uv` is recommended for local development, but plain `pip` also works.
 
 ```bash
-# 1. Install dependencies. uv is recommended, but pip also works.
-uv sync
+uv sync --all-extras
+```
 
-# or:
+Pip alternative:
+
+```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
+```
 
-# 2. Run tests
+Create local configuration from the example file:
+
+```bash
+cp .env.example .env
+```
+
+Real credentials are optional for the current sample workflow and are not required for tests.
+
+Makefile commands use the active `python` by default. If you do not activate the venv, pass it explicitly:
+
+```bash
+make PYTHON=.venv/bin/python test
+```
+
+## Test Commands
+
+```bash
 make test
+make lint
+python -m compileall src
+pytest tests
+ruff check src tests
+```
 
-# 3. Build a sample analytical panel
+## Sample Workflow
+
+The committed sample data is synthetic and intended for smoke tests only.
+
+```bash
 make sample-panel
-
-# 4. Run baseline analysis on the sample panel
 make sample-analysis
-
-# 5. Start dashboard
+make robustness
 make dashboard
 ```
 
-## Expected first-week goal
+The sample workflow writes local outputs under ignored folders such as `data/processed/` and `reports/tables/`.
 
-By the end of the first week, the team should be able to:
+## Data Policy
 
-1. Import Larridin scores or a sponsor-provided export.
-2. Build a clean company universe with ticker, CIK, sector, and industry.
-3. Pull or import public financial and market data.
-4. Build a company-quarter analytical panel.
-5. Compute the first IC and quintile backtest.
-6. Show coverage, signal distributions, and preliminary results in Streamlit.
+- Do not commit real API keys, tokens, database credentials, or private sponsor data.
+- Do not commit proprietary raw data.
+- Keep raw, interim, processed, and external datasets in ignored `data/` folders or managed storage.
+- Sample data committed to the repo must be clearly marked synthetic.
+- Every model feature must preserve an observation date or `available_at` timestamp.
+- Do not invent real research results. Label exploratory and hypothetical outputs clearly.
 
-## Repository conventions
+## Configuration
 
-- Keep raw data out of git. Use `data/raw/`, object storage, or database tables.
-- Every derived dataset should record source, snapshot date, and `available_at` timestamp.
-- Never commit API keys, database URLs with credentials, or private sponsor data.
-- Avoid look-ahead bias. Features must only use data observable at or before the prediction date.
-- Treat backtests as research artifacts, not investment advice.
+Default local configuration lives in [configs/base.yaml](configs/base.yaml). Environment variables and values in `.env` can override local settings.
 
-## Project structure
+Useful local variables:
+
+- `PROJECT_ENV`
+- `AI_IMPACT_CONFIG`
+- `AI_IMPACT_SAMPLES_DIR`
+- `AI_IMPACT_PROCESSED_DIR`
+- `AI_IMPACT_REPORTS_DIR`
+- `AI_IMPACT_DEFAULT_SIGNAL`
+- `AI_IMPACT_DEFAULT_RETURN_COLUMN`
+- `AI_IMPACT_LOG_LEVEL`
+- `DATABASE_URL`
+- `LARRIDIN_API_BASE_URL`
+- `LARRIDIN_API_KEY`
+- `SEC_USER_AGENT`
+
+## Repo Structure
 
 ```text
 .
-├── configs/                 # YAML configs
-├── data/                    # local data folders; raw/interim/processed ignored
-├── docs/                    # project docs and coding prompts
+├── configs/                 # YAML configuration
+├── data/                    # sample data plus ignored local data folders
+├── docs/                    # architecture, methodology, and reproducibility docs
 ├── infra/                   # SQL schema and deployment notes
-├── reports/                 # research outputs, figures, tables
-├── scripts/                 # runnable entry points
-├── src/ai_impact_research/  # package code
-└── tests/                   # unit tests
+├── reports/                 # report templates and ignored generated outputs
+├── scripts/                 # command-line entry points
+├── src/ai_impact_research/  # Python package
+└── tests/                   # pytest suite
 ```
+
+## Development Notes
+
+- Keep changes small and reviewable.
+- Keep Streamlit pages thin; put reusable logic in package modules.
+- Prefer deterministic tests using synthetic fixtures.
+- Avoid heavyweight orchestration frameworks until the research workflow needs them.

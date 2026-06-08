@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Literal
+
 from pydantic import BaseModel, Field, model_validator
 
 SourceType = Literal["sec_filing", "earnings_transcript", "job_posting", "news", "company_page"]
@@ -33,7 +34,7 @@ class AISignalExtraction(BaseModel):
     overall_confidence: float = Field(..., ge=0, le=1)
 
     @model_validator(mode="after")
-    def require_evidence(self) -> "AISignalExtraction":
+    def require_evidence(self) -> AISignalExtraction:
         if not self.evidence_items:
             raise ValueError("At least one evidence item is required for an AI signal extraction.")
         return self

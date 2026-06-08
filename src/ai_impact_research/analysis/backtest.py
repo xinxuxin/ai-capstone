@@ -12,7 +12,7 @@ def assign_quantiles(
 ) -> pd.DataFrame:
     out = df.copy()
     out[label_col] = pd.NA
-    for period, idx in out.groupby(period_col).groups.items():
+    for _period, idx in out.groupby(period_col).groups.items():
         values = out.loc[idx, signal]
         valid_idx = values.dropna().index
         if len(valid_idx) < quantiles:

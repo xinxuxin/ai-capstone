@@ -16,8 +16,10 @@ analysis:
     - ai_hiring_score
   outcome_columns:
     - fwd_return_1q
-    - revenue_growth_qoq
-    - operating_margin_delta_qoq
+    - fwd_return_2q
+    - revenue_growth
+    - operating_margin_delta
+    - revenue_per_employee_growth
   default_signal: ai_adoption_score
   default_return_column: fwd_return_1q
 
@@ -26,3 +28,6 @@ llm:
   default_score_scale_max: 5
   require_evidence: true
   max_quote_words: 35
+
+logging:
+  level: INFO
