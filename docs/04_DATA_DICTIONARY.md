@@ -180,24 +180,36 @@ Company-period modeling panel. Rows must be built from point-in-time available i
 
 | Field | Type | Required | Data source | Description | Timing and look-ahead notes |
 |---|---|---:|---|---|---|
-| panel_row_id | text | Required | Panel builder | Stable panel row key | Primary key |
 | company_id | text | Required | Identifier mapping | Stable company key | Join key |
 | ticker | text | Required | Identifier mapping | Ticker used for row | Point-in-time ticker preferred |
-| panel_date | date | Required | Panel builder | Feature observation date | Observation date |
+| company_name | text | Optional | Company master / Larridin scores | Company display name | Descriptive only |
+| sector | text | Optional | Company master | Sector classification | Used for controls and sector-average return proxy |
+| industry | text | Optional | Company master | Industry classification | Optional control/metadata |
+| snapshot_date | date | Required | `larridin_scores` | Score snapshot observation date | Observation date |
 | score_quarter | text | Required | Panel builder | Score/panel quarter | Period label |
+| score_available_at | timestamptz | Required | `larridin_scores` | Earliest timestamp score was observable | Must be <= `prediction_date` |
 | prediction_date | date | Required | Panel builder | Date predictions are formed | All feature `available_at` values must be <= this date |
-| available_at | timestamptz | Required | Panel builder | Max availability timestamp across included features | Required for modeling |
+| outcome_start_date | date | Optional | `market_prices` | First price date after `prediction_date` | Outcome window must start after prediction date |
+| outcome_end_date | date | Optional | `market_prices` | One-quarter outcome end price date | Must be after `outcome_start_date` |
+| quarter | text | Required | Panel builder | Quarter fixed-effect label | Same as `score_quarter` for MVP |
 | ai_adoption_score | integer | Optional | `larridin_scores` | 1-5 AI adoption feature | Must be observable by prediction date |
 | ai_fluency_score | integer | Optional | `larridin_scores` | 1-5 AI fluency feature | Must be observable by prediction date |
 | ai_impact_score | integer | Optional | `larridin_scores` | 1-5 AI impact feature | Must be observable by prediction date |
 | ai_hiring_score | integer | Optional | `larridin_scores` | 1-5 AI hiring feature | Must be observable by prediction date |
-| ai_composite_score | numeric | Optional | Derived | Composite AI score | Weighting must be documented |
+| composite_ai_score | numeric | Required | Derived | Simple mean of four Larridin score dimensions | Weighting must be documented if changed |
+| log_market_cap | numeric | Optional | Company master / market data | Natural log of market cap if available | Use only when observation timing is known |
+| prior_return_1q | numeric | Optional | `market_prices` | Return from two latest prices at or before prediction date | Feature/control only from pre-prediction prices |
+| revenue_growth_qoq | numeric | Optional | `financial_metrics` | Latest available quarter-over-quarter revenue growth | Uses only financial rows with `available_at <= prediction_date` |
+| operating_margin_t | numeric | Optional | `financial_metrics` | Latest available operating margin | Uses only financial rows with `available_at <= prediction_date` |
+| revenue_per_employee_t | numeric | Optional | `financial_metrics` | Latest available revenue per employee | Uses only financial rows with `available_at <= prediction_date` |
 | fwd_return_1q | numeric | Optional | `market_prices` | Forward one-quarter stock return | Outcome; never use as a feature for same prediction date |
 | fwd_return_2q | numeric | Optional | `market_prices` | Forward two-quarter stock return | Outcome; never use as a feature for same prediction date |
-| revenue_growth | numeric | Optional | `financial_metrics` | Forward or aligned revenue growth | Define horizon in panel metadata/config |
-| operating_margin_delta | numeric | Optional | `financial_metrics` | Margin change outcome/control | Define horizon in panel metadata/config |
-| revenue_per_employee_growth | numeric | Optional | `financial_metrics` | Productivity growth outcome | Sparse if employee counts missing |
-| headcount_growth | numeric | Optional | `financial_metrics` or job postings | Headcount/hiring-related outcome | Source definition must be documented |
+| fwd_excess_return_1q | numeric | Optional | Derived from `market_prices` | Forward return minus sector-quarter average proxy | Use a benchmark column instead when available |
+| future_revenue_growth_qoq | numeric | Optional | `financial_metrics` | Revenue growth between first two fiscal periods ending after prediction date | Outcome window begins after prediction date |
+| future_operating_margin_delta_qoq | numeric | Optional | `financial_metrics` | Operating margin change between first two future fiscal periods | Outcome window begins after prediction date |
+| future_revenue_per_employee_growth_qoq | numeric | Optional | `financial_metrics` | Revenue per employee growth between first two future fiscal periods | Requires employee counts |
+| timing_warning | text | Optional | Panel builder | Semicolon-delimited timing issue notes | Non-empty rows should be reviewed |
+| timing_violation | boolean | Required | Panel builder | Whether row violates timing rules | Strict mode drops these rows |
 | data_snapshot_id | text | Optional | Panel builder | Data snapshot/version key | Reproducibility |
 | created_at | timestamptz | Required | System | Row creation timestamp | Audit field |
 
