@@ -73,6 +73,16 @@ python scripts/run_baseline_analysis.py
 - Responsible AI caveats
 - Links/excerpts from project methodology docs
 
+## Ticker-Level Report Generator
+
+The deterministic report generator is available as a companion CLI workflow rather than a dashboard page in the current Streamlit structure:
+
+```bash
+python scripts/generate_company_report.py --ticker AIVA --panel data/processed/analytic_panel.csv --output reports/AIVA_report.md
+```
+
+The report generator uses local analytical-panel fields, peer/rank tools, optional saved backtest metrics, and optional saved LLM extraction evidence. A future dashboard integration can add a download button or report-preview page once the Streamlit runtime environment is stable.
+
 ## Implementation Notes
 
 - Use Plotly for charts.
