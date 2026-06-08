@@ -56,6 +56,39 @@ For each rebalance period:
 
 Rows with missing signal, missing outcome, or `timing_violation = true` should be excluded from strict IC, regression, and backtest runs.
 
+## Baseline quantitative analysis
+
+Phase 9 implements three transparent baseline tests:
+
+- Cross-sectional Spearman IC by quarter for each AI signal/outcome pair.
+- Pooled OLS regressions with optional controls plus sector and quarter fixed effects.
+- Equal-weight quintile backtests with Q5-Q1 long-short returns.
+
+Default signals:
+
+- `ai_adoption_score`
+- `ai_fluency_score`
+- `ai_impact_score`
+- `ai_hiring_score`
+- `composite_ai_score`
+
+Default outcomes:
+
+- `fwd_return_1q`
+- `fwd_return_2q`
+- `future_revenue_growth_qoq`
+- `future_operating_margin_delta_qoq`
+- `future_revenue_per_employee_growth_qoq`
+
+Regression controls are included only when available:
+
+- `prior_return_1q`
+- `revenue_growth_qoq`
+- `operating_margin_t`
+- `log_market_cap`
+
+These baselines are intended for signal discovery and reproducibility checks. They do not establish causality and must not be presented as investment advice.
+
 ## Caveats
 
 - Correlation is not causation.
