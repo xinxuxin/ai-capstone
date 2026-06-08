@@ -25,3 +25,14 @@ Open review items:
 - Confirm sponsor-approved benchmark or sector return field for excess return analysis.
 - Confirm minimum sample thresholds for regression and quintile construction on real data.
 - Decide whether robust or clustered standard errors should replace baseline OLS standard errors.
+
+## Phase 14 Robustness and Responsible AI Diagnostics
+Phase 14 adds robustness diagnostics for sector neutrality, size buckets, missingness, lag sensitivity, disclosure bias proxies, and LLM extraction reliability.
+These diagnostics are descriptive checks only. They do not establish causality, solve fairness, or validate investment use.
+Diagnostic row counts:
+- disclosure_bias_proxy: 1
+- lag_sensitivity: 3
+- llm_extraction_reliability: 6
+- missingness_diagnostics: 130
+- sector_neutral_ic: 8
+- size_bucket_analysis: 3

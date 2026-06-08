@@ -89,9 +89,23 @@ Regression controls are included only when available:
 
 These baselines are intended for signal discovery and reproducibility checks. They do not establish causality and must not be presented as investment advice.
 
+## Robustness diagnostics
+
+Phase 14 adds descriptive robustness checks that should be reviewed before interpreting signal relationships:
+
+- Sector-neutral IC computes within-sector IC values and compares their average with raw cross-sectional IC.
+- Size bucket analysis compares signal distributions and IC across small / mid / large buckets when `market_cap` or `log_market_cap` is available.
+- Missingness diagnostics report missingness by sector, quarter, signal, and outcome, and flag highly concentrated gaps.
+- Lag sensitivity compares available 1Q, 2Q, and 4Q horizons where those outcome columns exist.
+- Disclosure bias proxy checks the relationship between disclosure-volume fields and AI scores when source document counts or filing lengths are available.
+- LLM extraction reliability reports schema/evidence/confidence diagnostics when extraction JSONL outputs exist.
+
+These checks are guardrails, not proof. Sector-neutral IC can become unstable when sector groups are small, size buckets require defensible market-cap fields, and disclosure-bias proxies are placeholders until real source-document volume fields are available.
+
 ## Caveats
 
 - Correlation is not causation.
 - Short history may make Sharpe ratios unstable.
 - Disclosure intensity may bias AI scores toward large-cap or technology companies.
 - Hypothetical backtests are not investment advice.
+- Robustness checks do not solve fairness or eliminate omitted-variable bias.

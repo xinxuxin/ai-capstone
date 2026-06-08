@@ -14,6 +14,8 @@ Companies that disclose more AI activity may appear more advanced than companies
 
 Research analysis should treat LLM-derived features as noisy disclosure signals unless validated against independent source data.
 
+Phase 14 includes a disclosure-bias proxy interface. When source document counts, filing lengths, or other disclosure-volume fields are unavailable, the diagnostic skips gracefully and records that limitation rather than inventing a proxy.
+
 ## Copyright and Source Handling
 
 The system should store short evidence spans only. Do not store full copyrighted articles, transcripts, filings, or web pages in outputs unless the project has explicit permission and a data governance basis.
@@ -39,6 +41,12 @@ If source timing is ambiguous, downstream panel logic should flag the row and ex
 ## Human Review
 
 Ticker-level reports should show evidence and uncertainty notes beside any LLM-derived signal. Low-confidence signals, duplicated evidence, unsupported scores, or surprising outputs require human review before publication or sponsor-facing use.
+
+## Robustness and Fairness Boundaries
+
+Sector-neutral IC, size buckets, missingness diagnostics, lag sensitivity, and LLM reliability checks are responsible research diagnostics. They can reveal fragility or data-quality concerns, but they do not prove fairness, remove bias, or establish that AI adoption caused company performance.
+
+If robustness checks disagree with baseline results, sponsor-facing summaries should present the disagreement plainly and avoid selective reporting.
 
 ## Real API Integration Guardrails
 
