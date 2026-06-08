@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+
 import pandas as pd
 
 from ai_impact_research.io_utils import write_csv

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+
 import pandas as pd
 
 from ai_impact_research.agent.company_report_agent import generate_company_report

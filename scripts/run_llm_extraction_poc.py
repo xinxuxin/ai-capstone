@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from ai_impact_research.llm.extract import extract_ai_signals_offline_stub
 
-
 SAMPLE_TEXT = "The company is piloting generative AI in customer support and software engineering workflows."
 
 

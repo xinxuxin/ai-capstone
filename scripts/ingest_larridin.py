@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+
 from ai_impact_research.ingestion.larridin import load_larridin_scores_csv
 from ai_impact_research.io_utils import write_csv
 

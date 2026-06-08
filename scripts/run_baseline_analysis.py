@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
-from pathlib import Path
 import json
+from datetime import UTC, datetime
+from pathlib import Path
 
 import pandas as pd
 
@@ -33,7 +33,7 @@ def main() -> None:
     write_csv(ls, output_dir / "long_short_returns.csv")
 
     metadata = {
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "panel": args.panel,
         "signal": args.signal,
         "outcome": args.outcome,

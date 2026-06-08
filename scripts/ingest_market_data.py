@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+
 from ai_impact_research.ingestion.market_data import load_market_prices_csv
 from ai_impact_research.io_utils import write_csv
 
