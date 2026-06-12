@@ -1,5 +1,7 @@
 # Deployment Notes
 
+> ⚠️ **Premature — not maintained yet.** We have no real data and no findings, so deployment is far off. This is an early sketch only. The local `docker compose` Postgres path is optional and unused in the current workflow (we use Supabase + local CSV/DuckDB). Revisit once there is something worth deploying.
+
 ## Local
 
 ```bash

@@ -74,7 +74,7 @@ with st.expander("Project documentation excerpts", expanded=False):
     for path in [
         "docs/03_DATA_SOURCES.md",
         "docs/05_BACKTESTING_METHODOLOGY.md",
-        "docs/05_LLM_SIGNAL_RUBRIC.md",
+        "docs/08_LLM_SIGNAL_RUBRIC.md",
         "docs/07_RESPONSIBLE_AI_AND_RISKS.md",
     ]:
         text = read_markdown(path)

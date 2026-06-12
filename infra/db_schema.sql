@@ -1,3 +1,23 @@
+-- ============================================================================
+-- ⚠️ LOCAL / REFERENCE SCHEMA ONLY — NOT the source of truth.
+--
+-- Larridin's real Supabase schema is authoritative. Do NOT run this against the
+-- shared Supabase database. When access lands, inspect their schema first and
+-- reconcile this file to it (column names, types, point-in-time / snapshot
+-- handling).
+--
+-- Known issues to verify against real data:
+--   * larridin_scores assumes INTEGER scores CHECK (1..5) and
+--     UNIQUE(company_id, snapshot_date, source_name). Real scores may be
+--     non-integer, revised-in-place, or keyed differently — verify before relying.
+--   * analytic_panel columns here (revenue_growth, operating_margin_delta,
+--     revenue_per_employee_growth, headcount_growth, ai_composite_score,
+--     panel_date) do NOT match what panel_builder.py / docs/04_DATA_DICTIONARY.md
+--     actually produce (future_*_qoq, composite_ai_score,
+--     snapshot_date/prediction_date). Known naming drift — unify against real
+--     data, not now.
+-- ============================================================================
+
 CREATE TABLE IF NOT EXISTS companies (
     company_id TEXT PRIMARY KEY,
     ticker TEXT NOT NULL,
