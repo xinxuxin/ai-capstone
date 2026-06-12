@@ -1,5 +1,7 @@
 # Interim Findings
 
+> ⚠️ **SYNTHETIC SMOKE-TEST OUTPUT — NOT RESEARCH FINDINGS.** Every number and row count below comes from running the baseline/robustness pipeline on the synthetic sample data in `data/samples/`, only to confirm the code runs end-to-end. These are not real results and must not be cited or interpreted as findings. Real findings will only come from validated real data.
+
 Phase 9 adds reproducible baseline quantitative analysis for the synthetic/sample analytical panel.
 
 Generated tables are written by `scripts/run_baseline_analysis.py` to:

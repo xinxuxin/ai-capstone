@@ -1,5 +1,7 @@
 # 分阶段搭建代码库的 Prompt Pack
 
+> **Historical record — not a current map of the repo.** This is the original phased build prompt-pack used to scaffold the project (via Codex). The file names, doc numbers, and page names in the prompts below reflect the *plan at build time* and have drifted from the final repo — e.g., the data dictionary is `04_DATA_DICTIONARY.md`, backtesting methodology is `05_BACKTESTING_METHODOLOGY.md`, the LLM rubric is now `08_LLM_SIGNAL_RUBRIC.md`, and the dashboard ships five pages (Overview / Company Explorer / Signal Analysis / Backtest / Methodology). For the current structure, see `README.md` and `CLAUDE.md`; do not treat the paths inside this file as current.
+
 下面的 prompts 设计给 Cursor、Claude Code、ChatGPT coding agent 或 Windsurf 使用。建议按阶段逐条粘贴，不要一次性让模型做完整系统。每个阶段都要求模型先读当前 repo，再最小改动地实现，避免生成无法集成的大段代码。
 
 ## 全局约束 Prompt：每个阶段前都先粘贴
